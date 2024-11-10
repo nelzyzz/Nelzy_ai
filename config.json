@@ -1,12 +1,14 @@
 {
-  "PAGE_ACCESS_TOKEN": "",
+  "PAGE_ACCESS_TOKEN": "EAAZAla0AZCCdUBO8OcXauQAoCUO8az1qM3OTQek4KBVASSa1zk4bInZAwFHa87NbQ0fhTHbfVERpltrlvMey0vHGdIS9znZAdFJLsDwRZAjZABMf1EaUwaIucemf6mX2zHQk7XGd2xHbeqOhZCthc0mPcm55HLglX1ZBuakw90lXskRP6rKs6MDQ55g5ei5sWlOdUAZDZD",
   "VERIFY_TOKEN": "WEBHOOK",
-  "ADMINS": [""],
-  "BOTNAME": "BOTNAME",
+  "ADMINS": [
+    "100071157053751",
+  ],
+  "BOTNAME": "Cleo Ai",
   "PREFIX": "/",
   "THEME_SETUP": {
     "THEME": "Fiery",
-    "ADMIN": "Your Name",
+    "ADMIN": "Nelzy",
     "TITLE": "PAGEBOT"
   },
   "selfListen": false
