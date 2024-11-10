@@ -11,7 +11,7 @@ module.exports.config = {
   cooldown: 5, // Cooldown time in seconds
 };
 
-module.exports.run = async function ({ event, args }) {
+module.exports.run = async function ({ event, args, api }) {
   const query = args.join(" ") || "hi";
   const userId = event.sender.id; // Get user ID from event
 
@@ -19,23 +19,25 @@ module.exports.run = async function ({ event, args }) {
   const footer = "・───── >ᴗ< ──────・";
 
   // Check for image attachments in the original message
-  if (event.messageReply && event.messageReply.attachments && event.messageReply.attachments[0]?.type === "photo") {
+  if (event.messageReply && event.messageReply.attachments && event.messageReply.attachments.length > 0) {
     const attachment = event.messageReply.attachments[0];
-    const imageURL = attachment.url;
+    if (attachment.type === "photo") {
+      const imageURL = attachment.url;
 
-    const geminiUrl = `https://joshweb.click/gemini?ask=${encodeURIComponent(query)}&imgurl=${encodeURIComponent(imageURL)}`;
-    try {
-      const response = await axios.get(geminiUrl);
-      const { vision } = response.data;
+      const geminiUrl = `https://joshweb.click/gemini?ask=${encodeURIComponent(query)}&imgurl=${encodeURIComponent(imageURL)}`;
+      try {
+        const response = await axios.get(geminiUrl);
+        const { vision } = response.data;
 
-      if (vision) {
-        return await api.sendMessage(`${header}\n${vision}\n${footer}`, event.sender.id);
-      } else {
-        return await api.sendMessage(`${header}\nFailed to recognize the image.\n${footer}`, event.sender.id);
+        if (vision) {
+          return await api.sendMessage(`${header}\n${vision}\n${footer}`, event.sender.id);
+        } else {
+          return await api.sendMessage(`${header}\nFailed to recognize the image.\n${footer}`, event.sender.id);
+        }
+      } catch (error) {
+        console.error("Error fetching image recognition:", error);
+        return await api.sendMessage(`${header}\nAn error occurred while processing the image.\n${footer}`, event.sender.id);
       }
-    } catch (error) {
-      console.error("Error fetching image recognition:", error);
-      return await api.sendMessage(`${header}\nAn error occurred while processing the image.\n${footer}`, event.sender.id);
     }
   }
 
@@ -53,4 +55,3 @@ module.exports.run = async function ({ event, args }) {
     await api.sendMessage(`${header}\nAn error occurred while trying to reach the API.\n${footer}`, event.sender.id);
   }
 };
-  
