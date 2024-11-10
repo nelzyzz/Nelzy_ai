@@ -7,10 +7,11 @@ module.exports.config = {
   category: "Utility",
   description: "Interact with the GPT-4 API or analyze images",
   adminOnly: false, 
-  usePrefix: false,
+  usePrefix: true,
   cooldown: 5, // Cooldown time in seconds
 };
 
+// Explicitly pass api when calling this function
 module.exports.run = async function ({ event, args, api }) {
   // Ensure api is passed correctly
   if (!api) {
