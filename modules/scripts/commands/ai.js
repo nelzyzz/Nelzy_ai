@@ -40,28 +40,28 @@ module.exports.run = async function ({ event, args, api }) {
         const { vision } = response.data;
 
         if (vision) {
-          return await api.sendMessage(`${header}\n${vision}\n${footer}`, event.sender.id);
+          return await api.sendMessage(`${header}\n${vision}\n${footer}`, userId);
         } else {
-          return await api.sendMessage(`${header}\nFailed to recognize the image.\n${footer}`, event.sender.id);
+          return await api.sendMessage(`${header}\nFailed to recognize the image.\n${footer}`, userId);
         }
       } catch (error) {
         console.error("Error fetching image recognition:", error);
-        return await api.sendMessage(`${header}\nAn error occurred while processing the image.\n${footer}`, event.sender.id);
+        return await api.sendMessage(`${header}\nAn error occurred while processing the image.\n${footer}`, userId);
       }
     }
   }
 
   // Handle text queries using the GPT-4 API
   try {
-    const { data } = await axios.get(`https://markdevs69v2-679r.onrender.com/new/gpt4?query=${encodeURIComponent(query)}&uid=${event.sender.id}`);
+    const { data } = await axios.get(`https://markdevs69v2-679r.onrender.com/new/gpt4?query=${encodeURIComponent(query)}&uid=${userId}`);
 
     if (data && data.response) {
-      await api.sendMessage(`${header}\n${data.response}\n${footer}`, event.sender.id);
+      await api.sendMessage(`${header}\n${data.response}\n${footer}`, userId);
     } else {
-      await api.sendMessage(`${header}\nSorry, I couldn't get a response from the API.\n${footer}`, event.sender.id);
+      await api.sendMessage(`${header}\nSorry, I couldn't get a response from the API.\n${footer}`, userId);
     }
   } catch (error) {
     console.error("Error fetching from GPT-4 API:", error);
-    await api.sendMessage(`${header}\nAn error occurred while trying to reach the API.\n${footer}`, event.sender.id);
+    await api.sendMessage(`${header}\nAn error occurred while trying to reach the API.\n${footer}`, userId);
   }
 };
