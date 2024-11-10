@@ -11,7 +11,9 @@ module.exports.config = {
   cooldown: 5, // Cooldown time in seconds
 };
 
-// Explicitly pass api when calling this function
+// Define a motto
+const motto = "🔮 Empowering Conversations, One Query at a Time! 🔮";
+
 module.exports.run = async function ({ event, args, api }) {
   // Ensure api is passed correctly
   if (!api) {
@@ -22,7 +24,8 @@ module.exports.run = async function ({ event, args, api }) {
   const query = args.join(" ") || "hi";
   const userId = event.sender.id; // Get user ID from event
 
-  const header = "(⁠◍⁠•⁠ᴗ⁠•⁠◍⁠) | 𝙼𝚘𝚌𝚑𝚊 𝙰𝚒\n・──────────────・";
+  // Header and footer for responses
+  const header = `(⁠◍⁠•⁠ᴗ⁠•⁠◍⁠) | 𝙼𝚘𝚌𝚑𝚊 𝙰𝚒\n・──────────────・\n${motto}\n`;
   const footer = "・───── >ᴗ< ──────・";
 
   // Check for image attachments in the original message
