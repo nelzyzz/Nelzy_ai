@@ -7,11 +7,17 @@ module.exports.config = {
   category: "Utility",
   description: "Interact with the GPT-4 API or analyze images",
   adminOnly: false, 
-  usePrefix: true,
+  usePrefix: false,
   cooldown: 5, // Cooldown time in seconds
 };
 
 module.exports.run = async function ({ event, args, api }) {
+  // Ensure api is passed correctly
+  if (!api) {
+    console.error("API is not defined");
+    return;
+  }
+
   const query = args.join(" ") || "hi";
   const userId = event.sender.id; // Get user ID from event
 
